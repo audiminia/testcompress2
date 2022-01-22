@@ -22,7 +22,7 @@ async def encode(filepath):
             "-progress",
             progress,
             "-i",
-            video_file,
+            filepath,
             "-c:v",
             "h264",
             "-preset",
