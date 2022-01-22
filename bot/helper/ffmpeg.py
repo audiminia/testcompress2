@@ -33,7 +33,7 @@ async def encode(filepath):
             "copy",
             "-map",
             "0",
-            out_put_file_name
+            output_filepath
     ]
     process = await asyncio.create_subprocess_exec(
         *file_genertor_command,
@@ -41,3 +41,4 @@ async def encode(filepath):
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
+    return output_filepath
