@@ -1,7 +1,7 @@
 import os
 from bot import data, download_dir
 from pyrogram.types import Message
-from .ffmpeg import encode, get_thumbnail, get_duration, get_width_height
+from .ffmpeg import encode, get_thumbnail
 
 def on_task_complete():
     del data[0]
@@ -20,7 +20,7 @@ def add_task(message: Message):
         thumb = get_thumbnail(new_file, download_dir, duration / 4)
         width, height = get_width_height(new_file)
         msg.edit("```Uploading video...```")
-        message.reply_video(new_file, quote=True, supports_streaming=True, thumb=thumb, duration=duration, width=width, height=height)
+        message.reply_video(new_file, thumb=thumb, caption=filename, duration=duration, width=width, height=height, parse_mode=None)
         os.remove(new_file)
         os.remove(thumb)
         msg.edit("```Video Encoded to x265```")
