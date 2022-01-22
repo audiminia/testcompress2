@@ -8,7 +8,7 @@ import subprocess
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
-def encode(filepath):
+async def encode(filepath):
     basefilepath, extension = os.path.splitext(filepath)
     output_filepath = basefilepath + '.mp4'
     progress = output_directory + "/" + "progress.txt"
