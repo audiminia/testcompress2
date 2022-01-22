@@ -18,7 +18,7 @@ def add_task(message: Message):
         msg.edit("```Video Encoded, getting metadata...```")
 
         msg.edit("```Uploading video...```")
-        message.reply_document(new_file, caption=filename)
+        message.reply_document(new_file)
         os.remove(new_file)
         os.remove(thumb)
         msg.edit("```Video Encoded to x264```")
