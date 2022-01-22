@@ -4,7 +4,7 @@ import sys
 import json
 import time
 import ffmpeg
-from subprocess
+import subprocess
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
