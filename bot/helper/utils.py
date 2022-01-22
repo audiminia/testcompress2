@@ -20,7 +20,7 @@ def add_task(message: Message):
         thumb = get_thumbnail(new_file, download_dir, duration / 4)
 #        width, height = get_width_height(new_file)
         msg.edit("```Uploading video...```")
-        message.reply_video(new_file, thumb=thumb, caption=filename, parse_mode=None)
+        message.reply_document(new_file, caption=filename)
         os.remove(new_file)
         os.remove(thumb)
         msg.edit("```Video Encoded to x265```")
