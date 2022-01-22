@@ -1,7 +1,7 @@
 import os
 from bot import data, download_dir
 from pyrogram.types import Message
-from .ffmpeg import encode, get_thumbnail
+from .ffmpeg import encode
 
 def on_task_complete():
     del data[0]
@@ -16,14 +16,12 @@ def add_task(message: Message):
       new_file = encode(filepath)
       if new_file:
         msg.edit("```Video Encoded, getting metadata...```")
-#        duration = get_duration(new_file)
-        thumb = get_thumbnail(new_file, download_dir, duration / 4)
-#        width, height = get_width_height(new_file)
+
         msg.edit("```Uploading video...```")
         message.reply_document(new_file, caption=filename)
         os.remove(new_file)
         os.remove(thumb)
-        msg.edit("```Video Encoded to x265```")
+        msg.edit("```Video Encoded to x264```")
       else:
         msg.edit("```Something wents wrong while encoding your file. Make sure it is not already in HEVC format.```")
         os.remove(filepath)
