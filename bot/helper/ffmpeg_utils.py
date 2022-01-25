@@ -3,15 +3,14 @@ import sys
 import json
 import time
 import ffmpeg
-from subprocess import call, check_output
+import subprocess
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
 def get_codec(filepath, channel='v:0'):
-    output = check_output(['ffprobe', '-v', 'error', '-select_streams', channel,
-                            '-show_entries', 'stream=codec_name,codec_tag_string', '-of', 
-                            'default=nokey=1:noprint_wrappers=1', filepath],
-                          stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    cmd = ['ffprobe', '-v', 'error', '-select_streams', channel, '-show_entries', 'stream=codec_name,codec_tag_string', '-of',
+     'default=nokey=1:noprint_wrappers=1', filepath]
+    output = subprocess.run(cmd ,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
     return output.decode('utf-8').split()
 
 def encode(filepath):
@@ -46,9 +45,7 @@ def encode(filepath):
         audio_opts = '-c:a copy'
     else:
         audio_opts = '-c:a aac -b:a 128k'
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE,
-    call(['ffmpeg', '-i', filepath] + video_opts.split() + audio_opts.split() + [output_filepath])
+    subprocess.call(['ffmpeg', '-i', filepath] + video_opts.split() + audio_opts.split() + [output_filepath])
     os.remove(filepath)
     return output_filepath
 
