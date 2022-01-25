@@ -1,12 +1,11 @@
 {
   "name": "CompressBot2",
   "description": "Telegram Compress Bot",
-  "logo": "https://telegra.ph/file/b687febf32e4d583fb1d4.jpg",
   "keywords": [
     "telegram",
     "compress",
     "bot"
-  ]
+  ],
   "repository": "https://github.com/audiminia/testcompress2",
   "env": {
     "ENV": {
