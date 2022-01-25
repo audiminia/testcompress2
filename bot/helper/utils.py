@@ -1,7 +1,7 @@
 import os
 from bot import data, download_dir
 from pyrogram.types import Message
-from .ffmpeg import encode
+from .ffmpeg_utils import encode, get_thumbnail, get_duration, get_width_height
 
 def on_task_complete():
     del data[0]
@@ -10,20 +10,22 @@ def on_task_complete():
 
 def add_task(message: Message):
     try:
-      msg = message.reply_text("```Downloading video...```", quote=True)
+      msg = message.reply_text("Downloading......", quote=True)
       filepath = message.download(file_name=download_dir)
-      msg.edit("```Encoding video...```")
+      msg.edit("Encoding.....")
       new_file = encode(filepath)
       if new_file:
-        msg.edit("```Video Encoded, getting metadata...```")
-
-        msg.edit("```Uploading video...```")
-        message.reply_document(new_file)
+        msg.edit("Video Encoded Successfully\nGetting Metadata 🐭")
+        duration = get_duration(new_file)
+        thumb = get_thumbnail(new_file, download_dir, duration / 4)
+        width, height = get_width_height(new_file)
+        msg.edit("Uploading 🐭")
+        message.reply_video(new_file, quote=True, supports_streaming=True, thumb=thumb, duration=duration, width=width, height=height)
         os.remove(new_file)
         os.remove(thumb)
-        msg.edit("```Video Encoded to x264```")
+        msg.edit("Video Successfully Encoded to x265 🐭")
       else:
-        msg.edit("```Something wents wrong while encoding your file. Make sure it is not already in HEVC format.```")
+        msg.edit("Something Went Wrong While Encoding :(\nTry Again Later 🐭")
         os.remove(filepath)
     except Exception as e:
       msg.edit(f"```{e}```")
