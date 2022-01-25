@@ -10,7 +10,7 @@ from hachoir.parser import createParser
 def get_codec(filepath, channel='v:0'):
     cmd = ['ffprobe', '-v', 'error', '-select_streams', channel, '-show_entries', 'stream=codec_name,codec_tag_string', '-of',
            'default=nokey=1:noprint_wrappers=1', filepath]
-    output = subprocess.run(cmd ,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+    output = subprocess.check_output(cmd)
     return output.decode('utf-8').split()
 
 def encode(filepath):
