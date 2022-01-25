@@ -8,10 +8,11 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
 def get_codec(filepath, channel='v:0'):
-   output = check_output([filepath, 'ffprobe', '-v', 'error', '-select_streams', channel,
-                           '-show_entries', 'stream=codec_name,codec_tag_string', '-of', 
-                           'default=nokey=1:noprint_wrappers=1'])
-   return output.decode('utf-8').split()
+    output = check_output(['ffprobe', '-v', 'error', '-select_streams', channel,
+                            '-show_entries', 'stream=codec_name,codec_tag_string', '-of', 
+                            'default=nokey=1:noprint_wrappers=1', filepath],
+                          stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    return output.decode('utf-8').split()
 
 def encode(filepath):
     basefilepath, extension = os.path.splitext(filepath)
@@ -45,6 +46,8 @@ def encode(filepath):
         audio_opts = '-c:a copy'
     else:
         audio_opts = '-c:a aac -b:a 128k'
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
     call(['ffmpeg', '-i', filepath] + video_opts.split() + audio_opts.split() + [output_filepath])
     os.remove(filepath)
     return output_filepath
