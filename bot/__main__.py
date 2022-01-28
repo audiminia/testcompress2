@@ -34,6 +34,7 @@ def encode_video(app, message):
     if len(data) == 1:
       add_task(message)
 @app.on_message(filters.user(sudo_users) & filters.incoming & filters.command('eval'))
-run_code(app, message)
+def eval(app, message):
+  run_code(app, message)
 
 app.run()
