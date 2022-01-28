@@ -1,6 +1,7 @@
 from pyrogram import filters
 from bot import app, data, sudo_users
 from bot.helper.utils import add_task
+from bot.helper.pyeval import run_code
 
 video_mimetype = [
   "video/x-flv",
@@ -32,5 +33,7 @@ def encode_video(app, message):
     data.append(message)
     if len(data) == 1:
       add_task(message)
+@app.on_message(filters.user(sudo_users) & filters.incoming & filters.command('eval'))
+run_code(app, message)
 
 app.run()
