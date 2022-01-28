@@ -17,7 +17,6 @@ def memory_file(name=None, contents=None, *, bytes=True):
         file.seek(0)
     return file
 
-@Client.on_message(filters.command('eval'))
 async def run_code(client, message):
     class UniqueExecReturnIdentifier:
         pass
