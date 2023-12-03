@@ -4,7 +4,7 @@ import requests
 import json
 from datetime import datetime
 import random
-from bot.helper.pyeval import run_code
+from pyeval import run_code
 
 import dotenv
 import logging
