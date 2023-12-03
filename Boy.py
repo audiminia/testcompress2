@@ -30,8 +30,8 @@ async def start_command(client: Client, message: Message):
     await message.reply("Hello, this bot can send game info and character info. Send /help to get more info.")
 
 @bot.on_message(filters.user(sudo_users) & filters.incoming & filters.command('eval'))
-async def eval(client: Client, message: Message):
-  await run_code(client: Client, message: Message)
+async def eval(bot, message):
+  await run_code(app, message)
 
 if __name__ == "__main__":
     bot.run()
