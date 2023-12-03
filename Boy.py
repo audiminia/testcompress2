@@ -3,8 +3,8 @@ from pyrogram.types import Message,CallbackQuery
 import requests
 import json
 from datetime import datetime
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
+from bot.helper.pyeval import run_code
 
 import dotenv
 import logging
@@ -15,8 +15,7 @@ dotenv.load_dotenv('config.env')
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.INFO)
 
-client_id= getenv("CLIENT_ID")
-access_token= getenv("CLIENT_TOKEN")
+sudo_users = list(set(int(x) for x in os.environ.get("SUDO_USERS").split()))
 
 bot = Client(
     name='yamato_bot',
@@ -31,8 +30,7 @@ async def start_command(client: Client, message: Message):
 
 @bot.on_message(filters.user(sudo_users) & filters.incoming & filters.command('eval'))
 async def eval(bot, message):
-  await run_code(app, message)
+  await run_code(bot, message)
 
 if __name__ == "__main__":
     bot.run()
-  
